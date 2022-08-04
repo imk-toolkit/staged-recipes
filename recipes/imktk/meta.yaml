@@ -1,0 +1,46 @@
+{% set name = "imktk" %}
+{% set version = "0.2.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/imktk-{{ version }}.tar.gz
+  sha256: f134cc52c90a9cd6043d72f11842bbca95e9309315249c29d90523bd57a827fc
+
+build:
+  entry_points:
+    - imktk = imktk:main
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+  number: 0
+
+requirements:
+  host:
+    - pip
+    - python >=3.8,<3.11
+  run:
+    - netcdf4 >=1.5.8,<2.0.0
+    - python >=3.8,<3.11
+    - xarray >=0.20.1,<0.21.0
+
+test:
+  imports:
+    - imktk
+  commands:
+    - pip check
+    - imktk --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/imk-toolkit/imk-toolkit
+  summary: Toolkit provided by IMK at KIT
+  license: MIT
+  license_file:
+    - LICENSE
+
+extra:
+  recipe-maintainers:
+    - ucyo
